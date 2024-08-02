@@ -7,19 +7,15 @@ let humanScore = 0;
 let computerScore = 0;
 
 
-//Clicking a button should call a play round function with the correct player selection every time a button is clicked
-const buttons = document.querySelectorAll("button");
+//Key selectors 
+const buttons = document.querySelectorAll("button"); //Button selector for human choice
 
+let resultsBox = document.querySelector(".results") //Box selector for showing the result of the current round
 
+let currentScore = document.querySelector(".current-score") //Current score box selector for displaying the current score
 
-//Displaying the results
-//Box for showing the result of the current round
-let resultsBox = document.querySelector(".results")
-
-//Current score
-let currentScore = document.querySelector(".current-score")
-
-//showing the results
+//Displaying the current score
+currentScore.textContent = (`Computer score is ${computerScore}, Human score is ${humanScore}`)
 
 
 //Randomizing computer choice
@@ -44,58 +40,62 @@ function playRound(humanChoice, computerChoice) {
     }
     else if(humanChoice.toLowerCase() === "paper" && computerChoice === "rock") {
         resultsBox.textContent = (`Human WON: Human played Paper and Computer played: ${computerChoice}`)
-    humanScore++
+    humanScore += 1
     }
     else if(humanChoice.toLowerCase() === "paper" && computerChoice === "scizzors") {
         resultsBox.textContent = (`Human LOST: Human played Paper and Computer played: ${computerChoice}`)
-    computerScore++
+    computerScore += 1
     }
     else if(humanChoice.toLowerCase() === "scizzors" && computerChoice === "paper") {
         resultsBox.textContent = (`Human WON: Human played scizzors and Computer played: ${computerChoice}`)
-    humanScore++
+    humanScore += 1
     }
     else if(humanChoice.toLowerCase() === "scizzors" && computerChoice === "rock") {
         resultsBox.textContent = (`Human LOST: Human played scizzors and Computer played: ${computerChoice}`)   
-    computerScore++
+    computerScore += 1
     }
     else if(humanChoice.toLowerCase() === "rock" && computerChoice === "paper") {
         resultsBox.textContent = (`Human LOST: Human played rock and Computer played: ${computerChoice}`)   
-computerScore++
+    computerScore += 1
     }
     else if(humanChoice.toLowerCase() === "rock" && computerChoice === "scizzors") {
         resultsBox.textContent = (`Human WON: Human played rock and Computer played: ${computerChoice}`)   
-    humanScore++
+    humanScore += 1
+    }
+    console.log(`Human Score: ${humanScore}, Computer Score: ${computerScore}`); // Debugging statement
+    currentScore.textContent = `Human: ${humanScore} - Computer: ${computerScore}`;
+
+    if(humanScore === 5 || computerScore === 5) {
+        endgame()
     }
 }
 
-const game = () => {
-    for(let i=0; i<5; i++) {
-        function humanSelection() {
-            alert("Pick rock, paper or scizzors to play the game")
-            
-            buttons.forEach((button) => {
-                button.addEventListener("click", (e) => {
-                    if(e.target.id === "paper") {
-                        return "paper"
-                    } 
-                    else if (e.target.id === "rock") {
-                        return "rock"
-                    } else {
-                        return "scizzors"
-                    }
-                  }
-                )
-              }
-            )
-        
-        }
-        let humanChoice = humanSelection()
+function endgame() {
+    if(humanScore === 5) {
+        resultsBox.textContent = (`Congratulations you've won the game, the score is ${humanScore} and computer had ${computerScore} points`)
+    } else {
+        resultsBox.textContent = (`Game Over, computer owned you big time. Comptuer score is ${computerScore} and you had meager ${humanScore}`)
+    }
+
+    buttons.forEach((button) => {
+        button.style.display = "none"
+    })
+}
+
+//Computer choice is in the event listener to get a unique choice each time key is pressed
+buttons.forEach((button) => {
+    button.addEventListener("click", (e) => {
         let computerChoice = getComputerChoice()
-
-
-        playRound(humanChoice,computerChoice)
-    }
-}
-
-game()
+            if(e.target.id === "paper") {
+                playRound("paper", computerChoice)
+            } 
+            else if (e.target.id === "rock") {
+                playRound("rock", computerChoice)
+            } else {
+                playRound("scizzors", computerChoice)
+            }
+         }
+     )
+  }
+)
 
