@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 1024px;
+}
+
+.box {
+    height: 50px;
+    width: 64px;
+    border: 2px solid black;
+
+}
+
+.popup {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+}
