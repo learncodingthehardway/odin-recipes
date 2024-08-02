@@ -17,13 +17,17 @@ let row = 16
 
 //Function to create a specified number of boxes
 function createBoxes(numberOfColumnsToCreate) {
+    container.innerHTML = '';
     col = numberOfColumnsToCreate
     row = col
     for (let i = 0; i < (col * row) ; i++) {
         let box = document.createElement("div")
-        box.style.width = (`${sketchArea}/${numberOfColumnsToCreate}`)
-        container.appendChild(box)
+        let boxWidth = sketchArea/col
+        let boxHeight = boxWidth
+        box.style.width = `${boxWidth}px`
+        box.style.height = `${boxHeight}px`
         box.className = "box"
+        container.appendChild(box)
         box.addEventListener("mouseover", (e) => {
             e.target.style.backgroundColor = "red";
         })
