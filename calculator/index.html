@@ -11,31 +11,34 @@
 <body>
     <!-- display for the calculator at first dummy numbers-->
     <!-- Buttons for Each Digit, add, subtract, multiply, divide and equals, clear button -->
-    <div class="display-container" id="display">0
-    </div>
-    
-    <div class="button-container">
-        <div class="digits-container">
-            <button type="button" class="digit">1</button>
-            <button type="button" class="digit">2</button>
-            <button type="button" class="digit"> 3</button>
-            <button type="button" class="digit">4</button>
-            <button type="button" class="digit">5</button>
-            <button type="button" class="digit">6</button>
-            <button type="button" class="digit">7</button>
-            <button type="button" class="digit">8</button>
-            <button type="button" class="digit">9</button>
-            <button type="button" class="digit">0</button>
+    <div class="calculator-body">
+        <div class="display-container" id="display">0
         </div>
-        <div class="functions-container">
-            <button type="button" class="function">+</button>
-            <button type="button" class="function">-</button>
-            <button type="button" class="function">*</button>
-            <button type="button" class="function">/</button>
+        <div class="button-container">
+            <div class="digits-container">
+                <button type="button" class="operator" id="clear">AC</button>
+                <button type="button" class="operator" id="back">back</button>
+                <button type="button" class="operator" id="%">%</button>
+                <button type="button" class="digit">1</button>
+                <button type="button" class="digit">2</button>
+                <button type="button" class="digit"> 3</button>
+                <button type="button" class="digit">4</button>
+                <button type="button" class="digit">5</button>
+                <button type="button" class="digit">6</button>
+                <button type="button" class="digit">7</button>
+                <button type="button" class="digit">8</button>
+                <button type="button" class="digit">9</button>
+                <button type="button" class="digit" id="zero">0</button>
+                <button type="button" class="float">.</button>
+            </div>
+            <div class="operators-container">
+                <button type="button" class="operator">+</button>
+                <button type="button" class="operator">-</button>
+                <button type="button" class="operator">*</button>
+                <button type="button" class="operator">/</button>
+                <button type="button" class="operator" id="equals">=</button>
+            </div>
         </div>
     </div>
-    <button type="button" class="function" id="equals">=</button>
-    <button type="button" class="function" id="clear">clear</button>
-
 </body>
 </html>

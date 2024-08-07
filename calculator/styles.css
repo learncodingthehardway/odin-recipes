@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: monospace;
 }
 
 body {
@@ -12,11 +13,15 @@ body {
     max-width: 1024px;
     min-height: 1024px;
     margin: 0 auto;
+    background-color: #fafafafa;
 }
 
-.digit {
+.digit, .float {
     height: 100px;
     width: 100px;
+    background-color: #217C7E;
+    font-size: 30px;
+    border-radius: 5px;
 }
 
 .digits-container {
@@ -35,11 +40,51 @@ body {
 }
 
 .display-container {
-    width: 300px;
-    border: 1px solid black;
+    width: 400px;
+    border: 2px solid black;
+    border-radius: 5px;
     height: 100px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
-    font-size: 40px;
+    font-size: 50px;
+    padding: 20px;
+    background-color: #b2b9b7;
+}
+
+#zero {
+    width: 200px;
+}
+
+.button-container {
+    display: flex;
+}
+
+.operators-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.operator {
+    width: 100px;
+    height: 100px;
+    background-color: #FF8F1F;
+    font-size: 30px;
+    border-radius: 5px;
+}
+
+.functions-bot {
+    display: flex;
+    justify-content: flex-start;
+    width: 400px;
+}
+
+#clear {
+    background-color: dodgerblue;
+}
+
+.calculator-body {
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
 }
