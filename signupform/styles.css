@@ -1,1 +1,118 @@
-styles.css
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto;
+    font-weight: 400;
+}
+
+
+.flex-structure {
+    height: 100vh;
+    display: flex;
+}
+
+.background-left {
+    flex-grow: 0;
+    flex-basis: 35vw;
+    background-image: url(images/cat.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.content-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    background-color: #fafafafa;
+}
+
+.logo-container {
+    font-size: 32px;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    margin: 200px 0;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form-container {
+    background-color: white;
+    height: 30vh;
+    padding: 50px;
+}
+
+.form-fields {
+    width: min(50vw, 600px);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.headline {
+    font-size: 20px;
+    padding: 50px;
+    text-align: left;
+    font-weight: 600;
+    width: min(40vw, 800px);
+}
+
+h3 {
+    font-size: 24px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    border: 1px solid #E5E7EB;
+    display: block;
+    height: 25px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.form-row {
+    margin: 20px 40px 20px 0px;
+}
+
+label {
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.error-message {
+    display: none;
+    color: red;
+    font-size: 0.9rem;
+}
+
+input:invalid + .error-message {
+    display: inline;
+}
+
+button {
+    width: min(20%, 250px);
+    height: 40px;
+    color: white;
+    background-color: #596D48;
+    border: none;
+    border-radius: 5px;
+}
+
+.lower-section-container {
+    margin: 20px 50px;
+}
+
+.login-text {
+    color: #596D48;
+    font-weight: 600;
+}
+
+input:focus {
+    border: 1px solid blue;
+    box-shadow: 5px 5px 5px rgb(0,0,0,0.2)
+}
