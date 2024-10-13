@@ -4,29 +4,69 @@ import { Field, Label } from '@/components/fieldset'
 import { Textarea } from '@/components/textarea'
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 
 
-export default function TournamentExperienceAddDialog({isTournamentExperienceOpen, setIsTournamentExperienceOpen, tournamentExperienceInfo, setTournamentExperienceInfo}) {
+export default function TournamentExperienceAddDialog({
+    isTournamentExperienceOpen, 
+    setIsTournamentExperienceOpen, 
+    tournamentExperienceInfo, 
+    setTournamentExperienceInfo,
+    selectedExperience = null
+}) {
 
     //States to update the input values
     const [tournamentName, setTournamentName] = useState('');
     const [country, setCountry] = useState('');
     const [yearPlayed, setYearPlayed] = useState('');
 
+    //Edit or add?
+    const isEditMode = selectedExperience !== null;
+
+    //Function that deletes the selected experience
+    const handleDeleteExperience = () => {
+        setTournamentExperienceInfo(tournamentExperienceInfo.filter((exp) => exp.id !== selectedExperience.id));
+        setIsTournamentExperienceOpen(false);
+    }
+
+    //Adding and editing tournament experience functions
+    useEffect(() => {
+        if (isEditMode) {
+            setTournamentName(selectedExperience.tournamentName);
+            setCountry(selectedExperience.country);
+            setYearPlayed(selectedExperience.yearPlayed);
+        }
+        else {
+            setTournamentName('');
+            setCountry('');
+            setYearPlayed('');
+        }
+    }, [isEditMode, selectedExperience]);
 
     //Function to add the tournament experience to the state
 const handleSubmit = (e) => {
     e.preventDefault();
     
-    setTournamentExperienceInfo((prevInfo) => [...prevInfo, {
-        tournamentName: tournamentName,
-        country: country,
-        yearPlayed: yearPlayed,
-        id: crypto.randomUUID()
-    }]);
+    if (isEditMode) {
+        //Edit
+        setTournamentExperienceInfo((prevInfo) =>
+            prevInfo.map((exp) =>
+                exp.id === selectedExperience.id
+                    ? { ...exp, tournamentName, country, yearPlayed }
+                    : exp
+            )
+        );      
+    } else {
+        //Add
+        setTournamentExperienceInfo((prevInfo) => [...prevInfo, {
+            tournamentName: tournamentName,
+            country: country,
+            yearPlayed: yearPlayed,
+            id: crypto.randomUUID()
+        }]);
+    }
 
     setTournamentName('');
     setCountry('');
@@ -65,6 +105,11 @@ const handleSubmit = (e) => {
 
         </DialogBody>
         <DialogActions>
+            {isEditMode && (
+                <Button plain onClick={handleDeleteExperience}>
+                    Delete Experience
+                </Button>
+            )}
             <Button plain onClick={() => setIsTournamentExperienceOpen(false)}>
                 Cancel
             </Button>

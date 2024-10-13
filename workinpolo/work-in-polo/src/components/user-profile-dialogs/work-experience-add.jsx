@@ -3,10 +3,16 @@ import { Field, Label } from '@/components/fieldset'
 import { Textarea } from '@/components/textarea'
 import { Button } from '@/components/button'
 import { Input } from '@/components/input'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
-export default function WorkExperienceAddDialog({isWorkExperienceOpen, setIsWorkExperienceOpen, workExperienceInfo, setWorkExperienceInfo}) {
+export default function WorkExperienceAddDialog({
+    isWorkExperienceOpen,
+    setIsWorkExperienceOpen,
+    workExperienceInfo,
+    setWorkExperienceInfo,
+    selectedExperience = null
+}) {
 
 //Use states to store input values
 const [poloClubName, setPoloClubName] = useState('');
@@ -15,21 +21,55 @@ const [endDate, setEndDate] = useState('');
 const [experienceDescription, setExperienceDescription] = useState('');
 
 
-//Function to add the work experience to the state  
-const onSubmit = () => {
-    setWorkExperienceInfo([...workExperienceInfo, {
-        poloClubName: poloClubName,
-        startDate: startDate,
-        endDate: endDate,   
-        experienceDescription: experienceDescription,
-        id: crypto.randomUUID()
-    }]);
-    setPoloClubName('');
-    setStartDate('');
-    setEndDate('');
-    setExperienceDescription('');
+//Edit or add?
+const isEditMode = selectedExperience !== null;
+
+
+//Function that deletes the selected experience
+const handleDeleteExperience = () => {
+    setWorkExperienceInfo(workExperienceInfo.filter((exp) => exp.id !== selectedExperience.id));
     setIsWorkExperienceOpen(false);
-    console.log(workExperienceInfo);
+}
+
+useEffect(() => {
+    if (isEditMode) {
+        setPoloClubName(selectedExperience.poloClubName);
+        setStartDate(selectedExperience.startDate);
+        setEndDate(selectedExperience.endDate);
+        setExperienceDescription(selectedExperience.experienceDescription);
+    }
+    else {
+        setPoloClubName('');
+        setStartDate('');
+        setEndDate('');
+        setExperienceDescription('');
+    }
+}, [isEditMode, selectedExperience]);
+
+//Function to add the work experience to the state or edit a selected experience
+const onSubmit = () => {
+    if (isEditMode) {
+        //Edit
+        setWorkExperienceInfo((prevExperiences) =>
+            prevExperiences.map((exp) =>
+                exp.id === selectedExperience.id
+                    ? { ...exp, poloClubName, startDate, endDate, experienceDescription }
+                    : exp
+            )
+        );
+    } else {
+        //Add
+        setWorkExperienceInfo([...workExperienceInfo, {
+            poloClubName: poloClubName,
+            startDate: startDate,
+            endDate: endDate,   
+            experienceDescription: experienceDescription,
+            id: crypto.randomUUID()
+        }]);
+    }
+    setIsWorkExperienceOpen(false);
+
+   
 }
 
 
@@ -77,10 +117,15 @@ const onSubmit = () => {
                 </Field>
             </DialogBody>
             <DialogActions>
+                {isEditMode && (
+                    <Button plain onClick={handleDeleteExperience}>
+                        Delete Experience
+                    </Button>
+                )}
                 <Button plain onClick={() => setIsWorkExperienceOpen(false)}>
                     Cancel
                 </Button>
-                <Button onClick={onSubmit}>Add</Button>
+                <Button onClick={onSubmit}>{isEditMode ? 'Save Changes' : 'Add Experience'}</Button>
             </DialogActions>
         </Dialog>
     )

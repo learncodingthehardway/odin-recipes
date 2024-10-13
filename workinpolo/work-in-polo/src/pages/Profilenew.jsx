@@ -40,18 +40,78 @@ export default function UserProfile(){
     const [isCertificationOpen, setIsCertificationOpen] = useState(false);
     const [isHandicapOpen, setIsHandicapOpen] = useState(false);
 
+    const [selectedExperience, setSelectedExperience] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState(null);
+    const [selectedEducation, setSelectedEducation] = useState(null);
+    const [selectedCertification, setSelectedCertification] = useState(null);
 
     //States aggregation from dialogs
     const [aboutMeInfo, setAboutMeInfo] = useState([]);
     const [workExperienceInfo, setWorkExperienceInfo] = useState([]);
     const [tournamentExperienceInfo, setTournamentExperienceInfo] = useState([]);
     const [personalInformationInfo, setPersonalInformationInfo] = useState({});
-    const [languagesInfo, setLanguagesInfo] = useState([]);
+    const [languageInfo, setLanguageInfo] = useState([]);
     const [educationInfo, setEducationInfo] = useState([]);
     const [certificationInfo, setCertificationInfo] = useState([]);
     const [handicapInformationInfo, setHandicapInformationInfo] = useState({});
 
 
+
+    //Work Experience Functions for Adding and Editing the Data
+    const handleEditClick = (experience) => {
+        setSelectedExperience(experience);
+        setIsWorkExperienceOpen(true);
+    }
+
+    const handleAddExperienceClick = () => {
+        setSelectedExperience(null);
+        setIsWorkExperienceOpen(true);
+    }
+
+    //Tournament Experience Functions for Adding and Editing the Data
+    const handleTournamentEditClick = (experience) => {
+        setSelectedExperience(experience);
+        setIsTournamentExperienceOpen(true);
+    }
+
+    const handleTournamentAddClick = () => {
+        setSelectedExperience(null);
+        setIsTournamentExperienceOpen(true);
+    }
+
+    //Languages Functions for Adding and Editing the Data
+    const handleLanguageEditClick = (language) => {
+        setSelectedLanguage(language);
+        setIsLanguagesOpen(true);
+    }
+
+    const handleLanguageAddClick = () => {
+        setSelectedLanguage(null);
+        setIsLanguagesOpen(true);
+    }
+
+    //Education Functions for Adding and Editing the Data
+    const handleEducationEditClick = (education) => {
+        setSelectedEducation(education);
+        setIsEducationOpen(true);
+    }
+
+    const handleEducationAddClick = () => {
+        setSelectedEducation(null);
+        setIsEducationOpen(true);
+    }
+
+    //Certification Functions for Adding and Editing the Data
+    const handleCertificationEditClick = (certification) => {
+        setSelectedCertification(certification);
+        setIsCertificationOpen(true);
+    }
+
+    const handleCertificationAddClick = () => {
+        setSelectedCertification(null);
+        setIsCertificationOpen(true);
+    }
+    
     return (
         <SidebarLayoutMain>
             <div className="grid sm:grid-cols-5 lg:grid-cols-10 gap-4">
@@ -75,24 +135,30 @@ export default function UserProfile(){
 
                     <div className="w-full p-12 rounded-xl bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.07),0px_2px_2px_0px_rgba(9,9,11,0.05)] dark:bg-zinc-900 dark:shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:before:pointer-events-none dark:before:absolute dark:before:-inset-px dark:before:rounded-xl dark:before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
                         <div className=""> 
-                            <div className="flex w-full justify-between">
-                                <Heading> Work Experience </Heading>
+                            <div className="flex w-full justify-between mb-4">
+                                <div className="text-white text-2xl font-medium"> Work Experience </div>
                                 <div className="flex gap-2">
-                                    <button type="button" onClick={() => setIsWorkExperienceOpen(true)}>
+                                    <button type="button" onClick={handleAddExperienceClick}>
                                         <PlusIcon className="w-6 h-6 text-white"/>
                                     </button>
                                 </div>
-                                <WorkExperienceAddDialog isWorkExperienceOpen={isWorkExperienceOpen} setIsWorkExperienceOpen={setIsWorkExperienceOpen} workExperienceInfo={workExperienceInfo} setWorkExperienceInfo={setWorkExperienceInfo}/>
+                                <WorkExperienceAddDialog isWorkExperienceOpen={isWorkExperienceOpen} setIsWorkExperienceOpen={setIsWorkExperienceOpen} workExperienceInfo={workExperienceInfo} setWorkExperienceInfo={setWorkExperienceInfo} selectedExperience={selectedExperience}/>
                             
                             </div>
                         </div>
 
                         <div>
                             {workExperienceInfo.map((workExperience) => (
-                                <div key={workExperience.id} className="">
-                                    <div className="text-white">{workExperience.poloClubName}</div> 
+                                <div key={workExperience.id} className="mb-2">
+                                    <div className="flex justify-between">
+                                        <div className="text-white text-xl font-medium">{workExperience.poloClubName}</div> 
+                                        <button onClick={() => handleEditClick(workExperience)}>
+                                            <PencilSquareIcon className="w-6 h-6 text-white"/>
+                                        </button>
+                                    </div>  
                                     <div className="text-white">{workExperience.startDate} - {workExperience.endDate}</div>
                                     <div className="text-white">{workExperience.experienceDescription}</div>
+                                  
                                 </div>
                             ))}
                         </div>
@@ -101,23 +167,35 @@ export default function UserProfile(){
                     
                     <div className="p-12 w-full rounded-xl bg-white shadow-[0px_0px_0px_1px_rgba(9,9,11,0.07),0px_2px_2px_0px_rgba(9,9,11,0.05)] dark:bg-zinc-900 dark:shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:before:pointer-events-none dark:before:absolute dark:before:-inset-px dark:before:rounded-xl dark:before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
                         <div className="mt-4"> 
-                            <div className="flex justify-between">
-                                <Heading> Tournament Experience </Heading>
+                            <div className="flex justify-between mb-4">
+                                <div className="text-white text-2xl font-medium"> Tournament Experience </div>
                                 <div className="flex gap-2">
-                                    <button type="button" onClick={() => setIsTournamentExperienceOpen(true)}>
+                                    <button type="button" onClick={handleTournamentAddClick}>
                                         <PlusIcon className="w-6 h-6 text-white" />
                                     </button>
                                 </div>
-                                <TournamentExperienceAddDialog isTournamentExperienceOpen={isTournamentExperienceOpen} setIsTournamentExperienceOpen={setIsTournamentExperienceOpen} tournamentExperienceInfo={tournamentExperienceInfo} setTournamentExperienceInfo={setTournamentExperienceInfo}/>
+                                <TournamentExperienceAddDialog 
+                                    isTournamentExperienceOpen={isTournamentExperienceOpen} 
+                                    setIsTournamentExperienceOpen={setIsTournamentExperienceOpen} 
+                                    tournamentExperienceInfo={tournamentExperienceInfo} 
+                                    setTournamentExperienceInfo={setTournamentExperienceInfo}
+                                    selectedExperience={selectedExperience}
+                                />
 
                             </div>
                             
                             <div>
                                 {tournamentExperienceInfo.map((tournamentExperience) => (
-                                    <div key={tournamentExperience.id} className=""> 
-                                        <div className="text-white">{tournamentExperience.tournamentName}</div>
+                                    <div key={tournamentExperience.id} className="mb-2"> 
+                                        <div className="flex justify-between">
+                                            <div className="text-white text-xl font-medium">{tournamentExperience.tournamentName}</div>
+                                            <button onClick={() => handleTournamentEditClick(tournamentExperience)}>
+                                                <PencilSquareIcon className="w-6 h-6 text-white"/>
+                                            </button>
+                                        </div>
                                         <div className="text-white">{tournamentExperience.country}</div>
                                         <div className="text-white">{tournamentExperience.yearPlayed}</div>
+                                        
                                     </div>
                                 ))}
                             </div>
@@ -210,19 +288,26 @@ export default function UserProfile(){
                         <div className="flex flex-col p-12 w-full">
                             <div className="flex items-center justify-between">
                                 <h3 className="text-white mb-2"> Languages </h3>
-                                <button type="button" onClick={() => setIsLanguagesOpen(true)}>
+                                <button type="button" onClick={handleLanguageAddClick}>
                                 <PlusIcon className="w-6 h-6 text-white"/>
                             </button>
                             </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> English </div>
-                                <div className="text-white text-base"> Intermediate </div>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> Spanish </div>
-                                <div className="text-white text-base"> Native </div>
-                            </div>
-                            <LanguagesAddDialog isLanguagesOpen={isLanguagesOpen} setIsLanguagesOpen={setIsLanguagesOpen}/>
+                            {languageInfo.map((language) => (
+                                <div key={language.id} className="flex flex-col">
+                                    <div className="text-zinc-400 text-base"> {language.language} </div>
+                                    <div className="text-white text-base"> {language.level} </div>
+                                    <button onClick={() => handleLanguageEditClick(language)}>
+                                        <PencilSquareIcon className="w-6 h-6 text-white"/>
+                                    </button>
+                                </div>
+                            ))}
+                            <LanguagesAddDialog
+                                isLanguagesOpen={isLanguagesOpen} 
+                                setIsLanguagesOpen={setIsLanguagesOpen} 
+                                languageInfo={languageInfo} 
+                                setLanguageInfo={setLanguageInfo}
+                                selectedLanguage={selectedLanguage}
+                            />
 
                         </div>
 
@@ -230,24 +315,38 @@ export default function UserProfile(){
 
                         <div className="flex flex-col p-12 w-full">
                             <div className="flex items-center justify-between">
-                                <h3 className="text-white mb-2"> Education</h3>
-                                <button type="button" onClick={() => setIsEducationOpen(true)}>
+                                <h3 className="text-white mb-4"> Education</h3>
+                                <button type="button" onClick={handleEducationAddClick}>
                                     <PlusIcon className="w-6 h-6 text-white"/>
                                 </button>
                             </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> Institution Name </div>
-                                <div className="text-white text-base"> Harvard University </div>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> Degree </div>
-                                <div className="text-white text-base"> Bachelor's Degree </div>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> Graduation Year </div>
-                                <div className="text-white text-base"> 2012</div>
-                            </div>
-                            <EducationAddDialog isEducationOpen={isEducationOpen} setIsEducationOpen={setIsEducationOpen}/>
+                            {educationInfo.map((education) => (
+                                <div key={education.id} className="flex flex-col mb-4">
+                                    <div className="flex justify-between"> 
+                                        <div>
+                                            <div className="text-white text-lg"> {education.institution} </div>
+                                        </div>
+                                        <button onClick={() => handleEducationEditClick(education)}>
+                                            <PencilSquareIcon className="w-6 h-6 text-white"/>
+                                        </button>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <div className="text-zinc-400 text-base"> Degree </div>
+                                        <div className="text-white text-base"> {education.degree} </div>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <div className="text-zinc-400 text-base"> Graduation Year </div>
+                                        <div className="text-white text-base"> {education.graduationYear} </div>
+                                    </div>
+                                </div>
+                            ))}
+                            <EducationAddDialog 
+                                isEducationOpen={isEducationOpen} 
+                                setIsEducationOpen={setIsEducationOpen} 
+                                educationInfo={educationInfo} 
+                                setEducationInfo={setEducationInfo}
+                                selectedEducation={selectedEducation}
+                            />
                         </div>
 
                         <Divider />
@@ -255,21 +354,27 @@ export default function UserProfile(){
                         <div className="flex flex-col p-12 w-full">
                             <div className="flex items-center justify-between">
                                 <h3 className="text-white mb-2"> Certification</h3>
-                                <button type="button" onClick={() => setIsCertificationOpen(true)}>
+                                <button type="button" onClick={handleCertificationAddClick}>
                                     <PlusIcon className="w-6 h-6 text-white"/>
                                 </button>
                             </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> AAP </div>
-                                <div className="text-white text-base"> Polo Coach Certification </div>
-                                <div className="text-white text-base"> 2016 </div>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="text-zinc-400 text-base"> USPA </div>
-                                <div className="text-white text-base"> Polo Coach Certification </div>
-                                <div className="text-white text-base"> 2018 </div>
-                            </div>
-                            <CertificationAddDialog isCertificationOpen={isCertificationOpen} setIsCertificationOpen={setIsCertificationOpen}/>
+                            {certificationInfo.map((certification) => (
+                                <div key={certification.id} className="flex flex-col">
+                                    <div className="text-zinc-400 text-base"> {certification.certificationIssuer} </div>
+                                    <div className="text-white text-base"> {certification.certificationName} </div>
+                                    <div className="text-white text-base"> {certification.certificationYear} </div>
+                                    <button onClick={() => handleCertificationEditClick(certification)}>
+                                        <PencilSquareIcon className="w-6 h-6 text-white"/>
+                                    </button>
+                                </div>
+                            ))} 
+                            <CertificationAddDialog 
+                                isCertificationOpen={isCertificationOpen} 
+                                setIsCertificationOpen={setIsCertificationOpen} 
+                                certificationInfo={certificationInfo} 
+                                setCertificationInfo={setCertificationInfo}
+                                selectedCertification={selectedCertification}
+                            />
                         </div>
                     </div>
                 </div> 
